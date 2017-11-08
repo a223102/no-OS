@@ -1,0 +1,4 @@
+<map id="irq_ctrl_init" name="irq_ctrl_init">
+<area shape="rect" id="node1" title="Initialize the IRQ interrupts." alt="" coords="163,5,253,32"/>
+<area shape="rect" id="node2" href="$fmcadc2_2src_2app_2app__iio_8h.html#a6db2218af67f3db4d1a81ed0540c9110" title="Application IIO setup." alt="" coords="5,5,115,32"/>
+</map>
