@@ -94,6 +94,7 @@ CFLAGS = -Wall 								\
 ifeq (y,$(strip $(TINYIIOD)))
 CFLAGS += -D IIO_SUPPORT
 CFLAGS += -D _USE_STD_INT_TYPES
+include $(LIBRARIES)/libtinyiiod/Makefile_iio.variables
 endif
 
 ifeq (y,$(strip $(MBEDTLS)))
@@ -326,7 +327,10 @@ copy-srcs:
 		$(BUILD_DIR)/app/src/
 	cp -r $(subst LOCAL_PLATFORM,$(PLATFORM),$(INCS))	\
 		$(BUILD_DIR)/app/src/
-
+ifdef COPY_FILES
+	cp -r $(subst LOCAL_PLATFORM,$(PLATFORM),$(COPY_FILES))	\
+		$(BUILD_DIR)/app/src/
+endif
 .SILENT:clean
 clean:
 	$(call print,Cleaning build workspace \n)
@@ -440,10 +444,12 @@ xilinx-read-hdf:
 
 .SILENT:xilinx-bsp
 xilinx-bsp:
+	echo $(IIO_DEFS)
 	@ if [ ! -d "$(BUILD_DIR)/bsp" ];then				\
 	$(call print,Building hardware specification and bsp \n);	\
 	xsdk -batch -source $(SCRIPTS_PATH)/create_project.tcl		\
-		$(SDK_WORKSPACE) $(HARDWARE) $(ARCH) $(NULL);		\
+		$(SDK_WORKSPACE) $(HARDWARE) $(ARCH) "$(IIO_DEFS)"	\
+		$(NULL);						\
 	fi;
 # Update the linker script the heap size for microlbaze from 0x800 to 
 # 0x100000 
